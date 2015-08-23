@@ -1,0 +1,132 @@
+
+
+
+
+
+HOMEABOUTEAAC Teachers2015 TIMETABLEGALLERYPARTNERSCONTACT US
+
+
+
+
+
+
+
+
+
+
+
+
+4-6th September 2015
+Book Now!
+
+
+
+
+
+
+
+4-6th September 2015
+Book Now!
+
+
+
+
+
+
+
+4-6th September 2015
+Book Now!
+
+
+
+
+
+
+
+4-6th September 2015
+Book Now!
+
+
+
+
+
+
+
+4-6th September 2015
+Book Now!
+
+
+
+
+
+
+
+4-6th September 2015
+Book Now!
+
+
+
+
+
+
+
+4-6th September 2015
+Book Now!
+
+
+
+
+
+
+
+4-6th September 2015
+Book Now!
+
+
+
+
+
+
+
+4-6th September 2015
+Book Now!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+HOME
+
+
+
+EAAC 2015 Location: St. Leonard's Land, Edinburgh University Gymnasiums, Holyrood Road, Edinburgh EH8 8AQ
+
+    {"width":"auto","height":400,"maptypeid":"roadmap","maptypecontrol":false,"mapctrl":true,"zoom":"15","marker":2,"markercluster":false,"popup_max_width":300,"zoomwheel":true,"draggable":true,"directions":false,"disabledefaultui":false,"styler_invert_lightness":false,"styler_hue":"","styler_saturation":0,"styler_lightness":0,"styler_gamma":0,"media":true,"image_width":"auto","image_height":"auto","media_align":"top","media_width":"1-2","media_breakpoint":"medium","media_border":"none","media_overlay":"icon","overlay_animation":"fade","media_animation":"scale","title":true,"content":true,"social_buttons":true,"title_size":"h3","text_align":"left","link":true,"link_style":"button","link_text":"Read more","link_target":false,"class":"","markers":[{"lat":55.9494375464,"lng":-3.17967354774,"title":"universityofedinburgh","content":"\n<div class=\"uk-text-left\">\n\n        <div class=\"uk-margin uk-text-center\"><img src=\"\/wp-content\/uploads\/2015\/02\/universityofedinburgh.jpeg\" class=\"uk-responsive-width  uk-overlay-scale\" alt=\"universityofedinburgh\" width=\"275\" height=\"183\"><\/div>\n    \n    \n        <h3 class=\"uk-h3 uk-margin-top-remove\">universityofedinburgh<\/h3>\n    \n    \n        <div class=\"uk-margin\">St. Leonards Land, Edinburgh University Gymnasiums, Holyrood Road Edinburgh EH8 8AQ<\/div>\n    \n    \n    \n    \n<\/div>"}]}
+
+
+
+
+
+
+
+
+
+
+                Powered by Warp Theme Framework
+
+
+
+
+
+
+

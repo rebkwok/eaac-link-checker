@@ -1,9 +1,14 @@
 from bs4 import BeautifulSoup
 import urllib.request
 import colorama
+import smtplib
+import os
+from email.mime.text import MIMEText
 
 
 def main():
+
+    changed = False
     resp = urllib.request.urlopen("http://eaac.info")
     soup = BeautifulSoup(
         resp,  "html.parser", from_encoding=resp.info().get_param('charset')
@@ -32,26 +37,61 @@ def main():
     f.write(new_text)
     f.close()
 
+    msg = []
+
     if old_text == 'no existing file':
-        print(colorama.Fore.CYAN + 'New file homepage_links.txt created.')
+        nofile_msg = 'New file homepage_links.txt created.'
+        print(colorama.Fore.CYAN + nofile_msg)
+        msg += [nofile_msg]
+        changed = True
         for link in unique_links:
-            compare_link_text(link)
+            new_msg, _ = compare_link_text(link)
+            msg += new_msg
     elif new_text != old_text:
         print(colorama.Fore.RED + "Home page links have changed")
+        changed = True
         # if homepage links have changed, check content of all links
         for link in unique_links:
-            compare_link_text(link)
+            new_msg, _ = compare_link_text(link)
+            msg += new_msg
     else:
         # if homepage links have not changed, just check content of timetable link
-        print(
-            colorama.Fore.GREEN + "Home page links have not changed; "
-                                  "checking content of Timetable link only")
+        nochange_msg = "Home page links have not changed; " \
+                       "checking content of Timetable link only"
+        print(colorama.Fore.GREEN + nochange_msg)
+        msg += [nochange_msg]
+
         for link in unique_links:
             if link[0] == "2015 TIMETABLE":
-                compare_link_text(link)
+                new_msg, changed_link = compare_link_text(link)
+                msg += new_msg
+                changed = changed_link
+
+    # import ipdb; ipdb.set_trace()
+    email_msg = MIMEText('\n'.join(msg))
+
+    email_msg['Subject'] = '[{}] EAAC link checker'.format(
+        'CHANGED' if changed else 'NO CHANGE'
+    )
+    email_msg['From'] = 'rebkwok@gmail.com'
+    email_msg['To'] = 'rebkwok@gmail.com'
+
+    username = 'coderebk@gmail.com'
+    password = os.environ.get('EMAIL_PASSWORD', '')
+    if password:
+        # The actual mail send
+        server = smtplib.SMTP('smtp.gmail.com:587')
+        server.starttls()
+        server.login(username, password)
+        server.sendmail('coderebk@gmail.com', ['rebkwok@gmail.com'], email_msg.as_string())
+        server.quit()
+    else:
+        print("No email password found!")
 
 
 def compare_link_text(link):
+    msg = []
+    changed = False
     filename = '{}.txt'.format('_'.join(link[0].split(' ')))
     try:
         f = open('files/{}'.format(filename), 'r')
@@ -59,6 +99,7 @@ def compare_link_text(link):
         f.close()
     except FileNotFoundError:
         old_link_text = 'no existing file'
+        filename = 'temp.txt'
 
     f = open('files/{}'.format(filename), 'w')
     resp = urllib.request.urlopen(link[1])
@@ -71,17 +112,27 @@ def compare_link_text(link):
     f.close()
 
     if old_link_text == 'no existing file':
-        print(colorama.Fore.CYAN + 'New file {} created for "{} - {}"'. format(
-            filename, link[0], link[1]
-        ))
+        changed = True
+        newfile_msg = 'CHANGED: New link "{} - {}"; written to temp.txt; NOTE: add new file {}'.format(
+            link[0], link[1], '{}.txt'.format('_'.join(link[0].split(' ')))
+        )
+        print(colorama.Fore.CYAN + newfile_msg)
+        msg.append(newfile_msg)
     elif old_link_text.splitlines() != new_link_text.splitlines():
-        print(colorama.Fore.RED + 'Content of link "{} - {}" has changed (file {})'.format(
-            link[0], link[1], filename
-        ))
-    else:
-        print(colorama.Fore.GREEN + 'Checked content of link "{} - {}"; no change'.format(
+        changed = True
+        linkmsg = 'CHANGED: content of link "{} - {}")'.format(
             link[0], link[1]
-        ))
+        )
+        print(colorama.Fore.RED + linkmsg)
+        msg.append(linkmsg)
+    else:
+        linkmsg = 'No change: content of link "{} - {}"'.format(
+            link[0], link[1]
+        )
+        print(colorama.Fore.GREEN + linkmsg)
+        msg.append(linkmsg)
+
+    return msg, changed
 
 if __name__ == '__main__':
     colorama.init()
