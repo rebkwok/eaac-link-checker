@@ -4,6 +4,7 @@ import colorama
 import smtplib
 import os
 from email.mime.text import MIMEText
+from email.parser import Parser
 
 
 def main():
@@ -67,23 +68,29 @@ def main():
                 msg += new_msg
                 changed = changed_link
 
-    # import ipdb; ipdb.set_trace()
-    email_msg = MIMEText('\n'.join(msg))
-
-    email_msg['Subject'] = '[{}] EAAC link checker'.format(
+    from_email = 'coderebk@gmail.com'
+    to_email = ['rebkwok@gmail.com', 'rebkwok@yahoo.co.uk']
+    subject = '**{}** EAAC link checker'.format(
         'CHANGED' if changed else 'NO CHANGE'
     )
-    email_msg['From'] = 'rebkwok@gmail.com'
-    email_msg['To'] = 'rebkwok@gmail.com'
 
+    email_msg = MIMEText('\n'.join(msg))
+    email_msg['From'] = from_email
+    email_msg['Subject'] = subject
+
+    if changed:
+        email_msg['To'] = ', '.join(to_email)
+    else:
+        email_msg['To'] = 'rebkwok@gmail.com'
     username = 'coderebk@gmail.com'
     password = os.environ.get('EMAIL_PASSWORD', '')
+
     if password:
         # The actual mail send
         server = smtplib.SMTP('smtp.gmail.com:587')
         server.starttls()
         server.login(username, password)
-        server.sendmail('coderebk@gmail.com', ['rebkwok@gmail.com'], email_msg.as_string())
+        server.sendmail(from_email, to_email, email_msg.as_string())
         server.quit()
     else:
         print("No email password found!")
