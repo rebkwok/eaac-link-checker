@@ -2,6 +2,7 @@ HOME: http://eaac.info/
 ABOUT: http://eaac.info/?page_id=10
 EAAC Teachers: http://eaac.info/?page_id=218
 2015 TIMETABLE: http://eaac.info/?page_id=649
+2015 Show: http://eaac.info/?page_id=845
 GALLERY: http://eaac.info/?page_id=129
 PARTNERS: http://eaac.info/?page_id=794
 CONTACT US: http://eaac.info/?page_id=98

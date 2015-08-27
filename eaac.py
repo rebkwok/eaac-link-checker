@@ -41,35 +41,25 @@ def main():
     msg = []
 
     if old_text == 'no existing file':
-        nofile_msg = 'New file homepage_links.txt created.'
-        print(colorama.Fore.CYAN + nofile_msg)
-        msg += [nofile_msg]
+        homepage_msg = 'New file homepage_links.txt created.'
+        print(colorama.Fore.CYAN + homepage_msg)
         changed = True
-        for link in unique_links:
-            new_msg, _ = compare_link_text(link)
-            msg += new_msg
     elif new_text != old_text:
-        print(colorama.Fore.RED + "Home page links have changed")
+        homepage_msg = "Home page links have changed"
+        print(colorama.Fore.RED + homepage_msg)
         changed = True
-        # if homepage links have changed, check content of all links
-        for link in unique_links:
-            new_msg, _ = compare_link_text(link)
-            msg += new_msg
     else:
-        # if homepage links have not changed, just check content of timetable link
-        nochange_msg = "Home page links have not changed; " \
-                       "checking content of Timetable link only"
-        print(colorama.Fore.GREEN + nochange_msg)
-        msg += [nochange_msg]
+        homepage_msg = "Home page links have not changed"
+        print(colorama.Fore.GREEN + homepage_msg)
 
-        for link in unique_links:
-            if link[0] == "2015 TIMETABLE":
-                new_msg, changed_link = compare_link_text(link)
-                msg += new_msg
-                changed = changed_link
+    msg += [homepage_msg]
+
+    for link in unique_links:
+        new_msg, _ = compare_link_text(link)
+        msg += new_msg
 
     from_email = 'coderebk@gmail.com'
-    to_email = ['rebkwok@gmail.com', 'rebkwok@yahoo.co.uk']
+    to_email = ['rebkwok@gmail.com', 'marta@briongos.com']
     subject = '**{}** EAAC link checker'.format(
         'CHANGED' if changed else 'NO CHANGE'
     )
@@ -80,20 +70,18 @@ def main():
 
     if changed:
         email_msg['To'] = ', '.join(to_email)
-    else:
-        email_msg['To'] = 'rebkwok@gmail.com'
-    username = 'coderebk@gmail.com'
-    password = os.environ.get('EMAIL_PASSWORD', '')
+        username = 'coderebk@gmail.com'
+        password = os.environ.get('EMAIL_PASSWORD', '')
 
-    if password:
-        # The actual mail send
-        server = smtplib.SMTP('smtp.gmail.com:587')
-        server.starttls()
-        server.login(username, password)
-        server.sendmail(from_email, to_email, email_msg.as_string())
-        server.quit()
-    else:
-        print("No email password found!")
+        if password:
+            # The actual mail send
+            server = smtplib.SMTP('smtp.gmail.com:587')
+            server.starttls()
+            server.login(username, password)
+            server.sendmail(from_email, to_email, email_msg.as_string())
+            server.quit()
+        else:
+            print("No email password found!")
 
 
 def compare_link_text(link):
